@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.dagger:hilt-android-compiler:2.38.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.dagger/hilt-android-compiler/2.38.1/ddb2a282f99cce0e40529b80fd0e2db2119c6f3d/hilt-android-compiler-2.38.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.dagger/hilt-android-compiler/2.38.1/900f96ed9c725eae4d0f7ab1fa7ddaa1bee8776c/hilt-android-compiler-2.38.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.dagger/hilt-android-compiler/2.38.1/af6d2a833585d3d29d631c089a5a8f92fa0aed19/hilt-android-compiler-2.38.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
