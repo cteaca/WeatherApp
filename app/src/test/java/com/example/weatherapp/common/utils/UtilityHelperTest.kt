@@ -1,10 +1,9 @@
-package com.example.weatherapp
+package com.example.weatherapp.common.utils
 
-import com.example.weatherapp.common.utils.UtilityHelper
 import org.junit.Assert
 import org.junit.Test
 
-class UtilityUnitTest {
+class UtilityHelperTest {
     private var utilityHelper = UtilityHelper()
 
     @Test
