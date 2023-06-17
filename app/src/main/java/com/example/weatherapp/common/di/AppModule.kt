@@ -1,20 +1,24 @@
 package com.example.weatherapp.common.di
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.common.constants.Constants
 import com.example.weatherapp.common.utils.UtilityHelper
+import com.example.weatherapp.data.prefs.DataStoreProvider
 import com.example.weatherapp.data.remote.WeatherApi
 import com.example.weatherapp.data.repository.GetWeatherRepositoryImpl
-import com.example.weatherapp.data.usecase.ManageWeatherPreviousImpl
-import com.example.weatherapp.data.usecase.ManageWeatherUseCaseImpl
+import com.example.weatherapp.data.repository.HistoryRepositoryImpl
+import com.example.weatherapp.domain.usecase.ManageHistoryUseCaseImpl
+import com.example.weatherapp.domain.usecase.ManageWeatherUseCaseImpl
 import com.example.weatherapp.domain.repository.GetWeatherRepository
-import com.example.weatherapp.domain.usecase.ManageWeatherPrevious
+import com.example.weatherapp.domain.repository.HistoryRepository
+import com.example.weatherapp.domain.usecase.ManageHistoryUseCase
 import com.example.weatherapp.domain.usecase.ManageWeatherUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +29,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
 
     @Singleton
     @Provides
@@ -71,8 +74,18 @@ object AppModule {
     }
 
     @Provides
-    fun provideManageWeatherHistory( context: Application): ManageWeatherPrevious {
-        return ManageWeatherPreviousImpl(context)
+    fun provideManageWeatherHistory( historyRepository: HistoryRepository): ManageHistoryUseCase {
+        return ManageHistoryUseCaseImpl(historyRepository)
+    }
+
+    @Provides
+    fun provideHistoryRepository( dataStore: DataStoreProvider): HistoryRepository {
+        return HistoryRepositoryImpl(dataStore)
+    }
+
+    @Provides
+    fun provideDataStore(@ApplicationContext applicationContext: Context): DataStoreProvider {
+        return DataStoreProvider(applicationContext)
     }
 
     @Provides
@@ -84,5 +97,4 @@ object AppModule {
     fun provideManageWeatherUseCase(getWeatherRepository: GetWeatherRepository, utilityHelper: UtilityHelper): ManageWeatherUseCase {
         return ManageWeatherUseCaseImpl(getWeatherRepository = getWeatherRepository, utilityHelper = utilityHelper)
     }
-
 }

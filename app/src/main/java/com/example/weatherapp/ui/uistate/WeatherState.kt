@@ -1,6 +1,6 @@
 package com.example.weatherapp.ui.uistate
 
-import com.example.weatherapp.data.entity.CurrentWeather
+import com.example.weatherapp.domain.entity.CurrentWeather
 
 sealed class WeatherState {
     data class OnDisplayData(val data: CurrentWeather?) : WeatherState()

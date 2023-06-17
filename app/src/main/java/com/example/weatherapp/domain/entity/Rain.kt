@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.entity
+package com.example.weatherapp.domain.entity
 
 data class Rain(
     val rainInOneHr: String?,

@@ -18,5 +18,4 @@ interface WeatherApi {
         @Query("q") city: String,
         @Query("appid") appid: String,
     ): WeatherResponse?
-
 }

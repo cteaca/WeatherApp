@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.common.utils.NetworkResponse
 import com.example.weatherapp.common.utils.PermissionHandler
-import com.example.weatherapp.domain.usecase.ManageWeatherPrevious
+import com.example.weatherapp.domain.usecase.ManageHistoryUseCase
 import com.example.weatherapp.domain.usecase.ManageWeatherUseCase
 import com.example.weatherapp.ui.uistate.WeatherState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class WeatherViewModel @Inject constructor(
     private val manageWeatherUseCase: ManageWeatherUseCase,
     private val permissionHandler: PermissionHandler,
-    private val manageWeatherPrevious: ManageWeatherPrevious
+    private val previousWeatherUseCase: ManageHistoryUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<WeatherState?>(null)
@@ -29,7 +29,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getLastCity():String?{
-        return manageWeatherPrevious.getLastCity()
+        return previousWeatherUseCase.getLastCity()
     }
     fun getCurrentLocation() {
         val lastCity = getLastCity()
@@ -69,7 +69,7 @@ class WeatherViewModel @Inject constructor(
             manageWeatherUseCase.getWeatherReport(lat, lng).collectLatest {
                 when (val response = it) {
                     is NetworkResponse.Success -> {
-                        manageWeatherPrevious.saveLastCity(response.data?.cityName)
+                        previousWeatherUseCase.saveLastCity(response.data?.cityName)
                         _uiState.value = WeatherState.OnDisplayData(response.data)
                     }
                     is NetworkResponse.Error -> {
@@ -96,7 +96,7 @@ class WeatherViewModel @Inject constructor(
                 .collectLatest {
                 when (val response = it) {
                     is NetworkResponse.Success -> {
-                        manageWeatherPrevious.saveLastCity(response.data?.cityName)
+                        previousWeatherUseCase.saveLastCity(response.data?.cityName)
                         _uiState.value = WeatherState.OnDisplayData(response.data)
                     }
                     is NetworkResponse.Error -> {

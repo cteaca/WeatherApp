@@ -1,7 +1,7 @@
 package com.example.weatherapp.domain.usecase
 
 import com.example.weatherapp.common.utils.NetworkResponse
-import com.example.weatherapp.data.entity.CurrentWeather
+import com.example.weatherapp.domain.entity.CurrentWeather
 import kotlinx.coroutines.flow.Flow
 
 interface ManageWeatherUseCase {

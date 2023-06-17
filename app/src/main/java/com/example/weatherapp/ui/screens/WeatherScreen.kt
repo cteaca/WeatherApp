@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.weatherapp.data.entity.CurrentWeather
+import com.example.weatherapp.domain.entity.CurrentWeather
 import com.example.weatherapp.ui.theme.WeatherAppTheme
 import com.example.weatherapp.ui.uistate.WeatherState
 import com.example.weatherapp.ui.viewmodel.WeatherViewModel

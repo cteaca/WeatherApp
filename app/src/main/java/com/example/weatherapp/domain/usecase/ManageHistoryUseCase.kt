@@ -1,6 +1,6 @@
 package com.example.weatherapp.domain.usecase
 
-interface ManageWeatherPrevious {
+interface ManageHistoryUseCase {
 
      fun saveLastCity(city: String?)
 

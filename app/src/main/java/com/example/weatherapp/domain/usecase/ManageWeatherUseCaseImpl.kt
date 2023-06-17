@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.usecase
+package com.example.weatherapp.domain.usecase
 
 import com.example.weatherapp.common.constants.Constants
 import com.example.weatherapp.common.utils.NetworkResponse
@@ -7,9 +7,8 @@ import com.example.weatherapp.data.dto.WeatherResponse
 import com.example.weatherapp.data.dto.Main
 import com.example.weatherapp.data.dto.Sys
 import com.example.weatherapp.data.dto.Weather
-import com.example.weatherapp.data.entity.*
+import com.example.weatherapp.domain.entity.*
 import com.example.weatherapp.domain.repository.GetWeatherRepository
-import com.example.weatherapp.domain.usecase.ManageWeatherUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -128,5 +127,4 @@ class ManageWeatherUseCaseImpl @Inject constructor(
     private fun mapToRain(rain: com.example.weatherapp.data.dto.Rain?): Rain {
         return Rain(rainInOneHr = rain?.rainInOneHr?.toString() ?: "")
     }
-
 }

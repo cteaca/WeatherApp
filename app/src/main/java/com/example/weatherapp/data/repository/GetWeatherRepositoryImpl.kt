@@ -17,5 +17,4 @@ class GetWeatherRepositoryImpl @Inject constructor(private val weatherApi: Weath
         val apiKey = BuildConfig.OPEN_WEATHER_API_KEY
         return weatherApi.getCurrentWeather( q, appid = apiKey)
     }
-
 }
