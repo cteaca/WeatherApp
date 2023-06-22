@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class PermissionHandler @Inject constructor(@ApplicationContext private val context: Context) {
 
-   @SuppressLint("MissingPermission")//"Permission check is already in isPermissionGranted() method"
+   @SuppressLint("MissingPermission")// Permission check is already in isPermissionGranted() method
     fun getCurrentLocation(): Flow<Response<Location>> = callbackFlow {
         trySend(Response.Loading())
         if (isPermissionGranted()) {
