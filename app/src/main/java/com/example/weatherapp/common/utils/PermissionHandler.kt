@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 class PermissionHandler @Inject constructor(@ApplicationContext private val context: Context) {
 
-   @SuppressLint("Permission check is already in isPermissionGranted() method")
+   @SuppressLint("MissingPermission")//"Permission check is already in isPermissionGranted() method"
     fun getCurrentLocation(): Flow<Response<Location>> = callbackFlow {
         trySend(Response.Loading())
         if (isPermissionGranted()) {
@@ -48,12 +48,7 @@ class PermissionHandler @Inject constructor(@ApplicationContext private val cont
     }
 
      fun isPermissionGranted(): Boolean {
-        return (ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED)
+        return (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
     }
 }

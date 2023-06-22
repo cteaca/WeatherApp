@@ -33,11 +33,12 @@ object AppModule {
     @Singleton
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor(logger = object : HttpLoggingInterceptor.Logger {
+        val httpLoggingInterceptor = HttpLoggingInterceptor(logger = object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
                 Log.d("okHttp:", message)
             }
-        }).setLevel(HttpLoggingInterceptor.Level.BODY)
+        })
+        return httpLoggingInterceptor.apply { httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY }
     }
 
     @Singleton
