@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.prefs
+package com.example.weatherapp.data.local
 
 import android.content.Context
 import androidx.core.content.edit

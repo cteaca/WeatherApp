@@ -1,6 +1,6 @@
 package com.example.weatherapp.data.repository
 
-import com.example.weatherapp.data.prefs.DataStoreProvider
+import com.example.weatherapp.data.local.DataStoreProvider
 import com.example.weatherapp.domain.repository.HistoryRepository
 import javax.inject.Inject
 

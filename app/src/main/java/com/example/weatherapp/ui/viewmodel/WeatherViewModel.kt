@@ -2,7 +2,7 @@ package com.example.weatherapp.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapp.common.utils.NetworkResponse
+import com.example.weatherapp.common.utils.Response
 import com.example.weatherapp.common.utils.PermissionHandler
 import com.example.weatherapp.domain.usecase.ManageHistoryUseCase
 import com.example.weatherapp.domain.usecase.ManageWeatherUseCase
@@ -28,27 +28,24 @@ class WeatherViewModel @Inject constructor(
         getCurrentLocation()
     }
 
-    fun getLastCity():String?{
+    fun getLastCity(): String? {
         return previousWeatherUseCase.getLastCity()
     }
+
     fun getCurrentLocation() {
         val lastCity = getLastCity()
         viewModelScope.launch {
-            if (!lastCity.isNullOrEmpty()) {
-                // Use the last city
-                _uiState.value = WeatherState.OnLoading
-                getCurrentWeather(lastCity)
-            } else {
+            if (lastCity.isNullOrEmpty()) {
                 // Try to use the device location
                 if (permissionHandler.isPermissionGranted()) {
                     _uiState.value = WeatherState.OnLoading
                     permissionHandler.getCurrentLocation().collect { result ->
                         if (result.data != null) {
                             when (result) {
-                                is NetworkResponse.Error -> {
+                                is Response.Error -> {
                                     _uiState.value = WeatherState.OnError(result.message)
                                 }
-                                is NetworkResponse.Success -> {
+                                is Response.Success -> {
                                     getCurrentWeather(result.data.latitude, result.data.longitude)
                                 }
                                 else -> _uiState.value = WeatherState.OnLoading
@@ -56,6 +53,10 @@ class WeatherViewModel @Inject constructor(
                         }
                     }
                 }
+            } else {
+                // Use the last city
+                _uiState.value = WeatherState.OnLoading
+                getCurrentWeather(lastCity)
             }
         }
     }
@@ -68,11 +69,11 @@ class WeatherViewModel @Inject constructor(
         viewModelScope.launch {
             manageWeatherUseCase.getWeatherReport(lat, lng).collectLatest {
                 when (val response = it) {
-                    is NetworkResponse.Success -> {
+                    is Response.Success -> {
                         previousWeatherUseCase.saveLastCity(response.data?.cityName)
                         _uiState.value = WeatherState.OnDisplayData(response.data)
                     }
-                    is NetworkResponse.Error -> {
+                    is Response.Error -> {
                         _uiState.value = WeatherState.OnError(response.message)
                     }
                     else -> {
@@ -94,19 +95,19 @@ class WeatherViewModel @Inject constructor(
             manageWeatherUseCase
                 .getWeatherReport(q)
                 .collectLatest {
-                when (val response = it) {
-                    is NetworkResponse.Success -> {
-                        previousWeatherUseCase.saveLastCity(response.data?.cityName)
-                        _uiState.value = WeatherState.OnDisplayData(response.data)
-                    }
-                    is NetworkResponse.Error -> {
-                        _uiState.value = WeatherState.OnError(response.message)
-                    }
-                    else -> {
-                        _uiState.value = WeatherState.OnLoading
+                    when (val response = it) {
+                        is Response.Success -> {
+                            previousWeatherUseCase.saveLastCity(response.data?.cityName)
+                            _uiState.value = WeatherState.OnDisplayData(response.data)
+                        }
+                        is Response.Error -> {
+                            _uiState.value = WeatherState.OnError(response.message)
+                        }
+                        else -> {
+                            _uiState.value = WeatherState.OnLoading
+                        }
                     }
                 }
-            }
         }
     }
 }

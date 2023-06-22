@@ -23,8 +23,8 @@ import javax.inject.Inject
 class PermissionHandler @Inject constructor(@ApplicationContext private val context: Context) {
 
    @SuppressLint("Permission check is already in isPermissionGranted() method")
-    fun getCurrentLocation(): Flow<NetworkResponse<Location>> = callbackFlow {
-        trySend(NetworkResponse.Loading())
+    fun getCurrentLocation(): Flow<Response<Location>> = callbackFlow {
+        trySend(Response.Loading())
         if (isPermissionGranted()) {
             try {
                 val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
@@ -34,16 +34,16 @@ class PermissionHandler @Inject constructor(@ApplicationContext private val cont
                     override fun isCancellationRequested() = false
                 })
                     .addOnSuccessListener {
-                        trySend(NetworkResponse.Success(it))
+                        trySend(Response.Success(it))
                     }.addOnFailureListener {
-                        trySend(NetworkResponse.Error(Constants.FAILED_FETCH_USER_LOCATION))
+                        trySend(Response.Error(Constants.FAILED_FETCH_USER_LOCATION))
                     }
                 awaitClose { cancel() }
             } catch (e: Exception) {
-                trySend(NetworkResponse.Error(Constants.FAILED_FETCH_USER_LOCATION))
+                trySend(Response.Error(Constants.FAILED_FETCH_USER_LOCATION))
             }
         } else {
-            trySend(NetworkResponse.Error(Constants.FAILED_FETCH_USER_LOCATION))
+            trySend(Response.Error(Constants.FAILED_FETCH_USER_LOCATION))
         }
     }
 

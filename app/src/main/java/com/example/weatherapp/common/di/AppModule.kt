@@ -5,7 +5,7 @@ import android.util.Log
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.common.constants.Constants
 import com.example.weatherapp.common.utils.UtilityHelper
-import com.example.weatherapp.data.prefs.DataStoreProvider
+import com.example.weatherapp.data.local.DataStoreProvider
 import com.example.weatherapp.data.remote.WeatherApi
 import com.example.weatherapp.data.repository.GetWeatherRepositoryImpl
 import com.example.weatherapp.data.repository.HistoryRepositoryImpl
